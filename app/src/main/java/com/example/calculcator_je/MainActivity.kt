@@ -76,6 +76,7 @@ class MainActivity : AppCompatActivity() {
     var memory: Double = 0.0
     var clickedMemory: Boolean = false
     var onlyRead: Boolean = false
+    var saveEquals: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -282,7 +283,7 @@ class MainActivity : AppCompatActivity() {
         mr.setOnClickListener {
             str = memory.toString()
             val strDouble = str.toDouble()
-            if(strDouble - strDouble.toLong() == 0.0){ // 정수
+            if (strDouble - strDouble.toLong() == 0.0) { // 정수
                 expressionText(str.substring(0, str.length - 2))
             } else { // 소수
                 expressionText(str)
@@ -290,11 +291,11 @@ class MainActivity : AppCompatActivity() {
             clickedMemory = false
             onlyRead = true
 
-            if(!numList[0].isEmpty() && !numList[1].isEmpty() && numList[2].isEmpty()){ // 1 +
+            if (!numList[0].isEmpty() && !numList[1].isEmpty() && numList[2].isEmpty()) { // 1 +
                 changeNumList(2, str)
                 calcuate("=")
                 Log.d("확인_mr", numList.toString())
-            } else if(!numList[0].isEmpty() && numList[1].isEmpty()){ // 1
+            } else if (!numList[0].isEmpty() && numList[1].isEmpty()) { // 1
                 changeNumList(0, str)
                 Log.d("확인_mr", numList.toString())
             }
@@ -305,7 +306,7 @@ class MainActivity : AppCompatActivity() {
         mMinus.setOnClickListener {
             opGroup.visibility = View.VISIBLE
             opM.visibility = View.VISIBLE
-            if(!numList[2].isEmpty()){
+            if (!numList[2].isEmpty()) {
                 calcuate("=")
             }
             memory -= expression.text.toString().toDouble()
@@ -323,7 +324,7 @@ class MainActivity : AppCompatActivity() {
         mPlus.setOnClickListener {
             opGroup.visibility = View.VISIBLE
             opM.visibility = View.VISIBLE
-            if(!numList[2].isEmpty()){
+            if (!numList[2].isEmpty()) {
                 calcuate("=")
             }
             memory += expression.text.toString().toDouble()
@@ -395,10 +396,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun clickedNum(num: String) {
-        if (isError == true ) { // 에러 o
+        if (isError == true) { // 에러 o
             return
         } else { // 에러 x
-            if (clickedMemory == true || onlyRead == true){
+            if (clickedMemory == true || onlyRead == true) {
                 str = ""
                 expressionText(str)
                 clickedMemory = false
@@ -482,7 +483,7 @@ class MainActivity : AppCompatActivity() {
             str = expression.text.toString().substring(0, expression.text.length - 1)
             expressionText(str)
             changeNumList(2, str)
-            if(numList[2] == ""){
+            if (numList[2] == "") {
                 str = "0"
                 expressionText(str)
             }
@@ -568,6 +569,7 @@ class MainActivity : AppCompatActivity() {
                 Log.d("확인_계산", "${numList}")
                 result = numList[0].toDouble() / numList[2].toDouble()
             }
+            else -> return
         }
         numList = arrayListOf("", "", "")
         if (result - result.toLong() == 0.0) { // 정수
@@ -582,21 +584,21 @@ class MainActivity : AppCompatActivity() {
         expressionText(str)
     }
 
-    private fun changeSign(){
-        if (numList[2].isNotEmpty()){ // 1 + 2
+    private fun changeSign() {
+        if (numList[2].isNotEmpty()) { // 1 + 2
             checkPlusAndChangeSign(2)
         } else {
-            if(!numList[0].isEmpty() && numList[1].isEmpty()){ // 1
+            if (!numList[0].isEmpty() && numList[1].isEmpty()) { // 1
                 checkPlusAndChangeSign(0)
-            } else if(!numList[0].isEmpty() && !numList[1].isEmpty()){ // 1 +
+            } else if (!numList[0].isEmpty() && !numList[1].isEmpty()) { // 1 +
                 checkPlusAndChangeSign(0)
             }
         }
     }
 
-    private fun checkPlusAndChangeSign(i: Int){
+    private fun checkPlusAndChangeSign(i: Int) {
         var changedNum = ""
-        if (numList[i].toDouble() > 0){ // 양수 -> 음수
+        if (numList[i].toDouble() > 0) { // 양수 -> 음수
             changedNum = "-" + numList[i]
         } else if (numList[i].toDouble() < 0) {
             changedNum = numList[i].substring(1, numList[i].length)
