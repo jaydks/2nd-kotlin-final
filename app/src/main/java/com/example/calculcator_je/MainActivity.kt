@@ -275,7 +275,6 @@ class MainActivity : AppCompatActivity() {
 
         mc.setOnClickListener {
             memory = 0.0
-            binding.btnMs.isEnabled = false
             mc.isEnabled = false
             opM.visibility = View.INVISIBLE
         }
@@ -335,15 +334,6 @@ class MainActivity : AppCompatActivity() {
 
             Log.d("확인_ms", numList.toString())
             Log.d("확인_ms", "메모리 : $memory")
-        }
-
-        binding.btnMs.setOnClickListener {
-            memory = expression.text.toString().toDouble()
-            mc.isEnabled = true
-            mr.isEnabled = true
-            Log.d("확인_ms", numList.toString())
-            Log.d("확인_ms", "메모리 : $memory")
-
         }
 
         hms.setOnClickListener {
