@@ -12,6 +12,7 @@ import android.widget.Toast
 import com.example.calculcator_je.databinding.ActivityMainBinding
 import org.w3c.dom.Text
 import kotlin.math.exp
+import kotlin.math.sqrt
 
 class MainActivity : AppCompatActivity() {
 
@@ -342,7 +343,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         root.setOnClickListener {
-
+            clickedRoot()
         }
 
         gt.setOnClickListener {
@@ -527,32 +528,34 @@ class MainActivity : AppCompatActivity() {
 
     private fun showOperator(operator: String) {
         opGroup.visibility = View.VISIBLE
-        when (operator) {
-            "+" -> {
-                opPlus.visibility = View.VISIBLE
-                opMinus.visibility = View.INVISIBLE
-                opMulti.visibility = View.INVISIBLE
-                opDiv.visibility = View.INVISIBLE
+        if (numList[1].isNotEmpty()) {
+            when (operator) {
+                "+" -> {
+                    opPlus.visibility = View.VISIBLE
+                    opMinus.visibility = View.INVISIBLE
+                    opMulti.visibility = View.INVISIBLE
+                    opDiv.visibility = View.INVISIBLE
+                }
+                "-" -> {
+                    opPlus.visibility = View.INVISIBLE
+                    opMinus.visibility = View.VISIBLE
+                    opMulti.visibility = View.INVISIBLE
+                    opDiv.visibility = View.INVISIBLE
+                }
+                "*" -> {
+                    opPlus.visibility = View.INVISIBLE
+                    opMinus.visibility = View.INVISIBLE
+                    opMulti.visibility = View.VISIBLE
+                    opDiv.visibility = View.INVISIBLE
+                }
+                "/" -> {
+                    opPlus.visibility = View.INVISIBLE
+                    opMinus.visibility = View.INVISIBLE
+                    opMulti.visibility = View.INVISIBLE
+                    opDiv.visibility = View.VISIBLE
+                }
+                else -> return
             }
-            "-" -> {
-                opPlus.visibility = View.INVISIBLE
-                opMinus.visibility = View.VISIBLE
-                opMulti.visibility = View.INVISIBLE
-                opDiv.visibility = View.INVISIBLE
-            }
-            "*" -> {
-                opPlus.visibility = View.INVISIBLE
-                opMinus.visibility = View.INVISIBLE
-                opMulti.visibility = View.VISIBLE
-                opDiv.visibility = View.INVISIBLE
-            }
-            "/" -> {
-                opPlus.visibility = View.INVISIBLE
-                opMinus.visibility = View.INVISIBLE
-                opMulti.visibility = View.INVISIBLE
-                opDiv.visibility = View.VISIBLE
-            }
-            else -> return
         }
     }
 
@@ -627,6 +630,58 @@ class MainActivity : AppCompatActivity() {
         Log.d("확인", numList.toString())
     }
 
+    private fun clickedRoot(){
+        var rootValue = 0.0
+        if(!numList[2].isEmpty()){ // 두번째 숫자 존재
+           if (numList[2].toDouble() >= 0){ // 양수
+               rootValue = sqrt(numList[2].toDouble())
+
+               val resultRoot = rootValue.toDouble()
+               if (resultRoot - resultRoot.toLong() == 0.0) { // 정수
+                   changeNumList(2, resultRoot.toLong().toString())
+               } else { // 소수
+                   changeNumList(2, resultRoot.toString())
+               }
+               expressionText(numList[2])
+               Log.d("확인_계산", numList.toString())
+               Log.d("확인_루트", "${sqrt(numList[2].toDouble())}")
+           }else{ // 음수
+               Toast.makeText(this, "음수의 제곱근은 존재하지 않습니다.", Toast.LENGTH_SHORT).show()
+           }
+        } else if(numList[2].isEmpty() && !numList[1].isEmpty()){ // 1 +
+            if (numList[0].toDouble() >= 0){ // 양수
+                rootValue = sqrt(numList[0].toDouble())
+
+                val resultRoot = rootValue.toDouble()
+                if (resultRoot - resultRoot.toLong() == 0.0) { // 정수
+                    changeNumList(0, resultRoot.toLong().toString())
+                } else { // 소수
+                    changeNumList(0, resultRoot.toString())
+                }
+                changeNumList(1, "")
+                expressionText(numList[0])
+                Log.d("확인_계산", numList.toString())
+            }else{ // 음수
+                Toast.makeText(this, "음수의 제곱근은 존재하지 않습니다.", Toast.LENGTH_SHORT).show()
+            }
+
+        } else if(numList[2].isEmpty() && numList[1].isEmpty() && !numList[0].isEmpty()){ // 4
+            if (numList[0].toDouble() >= 0){ // 양수
+                rootValue = sqrt(numList[0].toDouble())
+
+                val resultRoot = rootValue.toDouble()
+                if (resultRoot - resultRoot.toLong() == 0.0) { // 정수
+                    changeNumList(0, resultRoot.toLong().toString())
+                } else { // 소수
+                    changeNumList(0, resultRoot.toString())
+                }
+                expressionText(numList[0])
+                Log.d("확인_계산", numList.toString())
+            }else{ // 음수
+                Toast.makeText(this, "음수의 제곱근은 존재하지 않습니다.", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
 
     private fun hideOperator() {
         opGroup.visibility = View.GONE
