@@ -350,46 +350,57 @@ class MainActivity : AppCompatActivity() {
         }
 
         roundingSelectorGroup.setOnClickListener {
+            Toast.makeText(this, "기능 구현 예정입니다", Toast.LENGTH_SHORT).show()
 
         }
 
         roundSelectF.setOnClickListener {
+            Toast.makeText(this, "기능 구현 예정입니다", Toast.LENGTH_SHORT).show()
 
         }
 
         roundSelectCut.setOnClickListener {
+            Toast.makeText(this, "기능 구현 예정입니다", Toast.LENGTH_SHORT).show()
 
         }
 
         roundSelectHalf.setOnClickListener {
+            Toast.makeText(this, "기능 구현 예정입니다", Toast.LENGTH_SHORT).show()
 
         }
 
         showNums.setOnClickListener {
+            Toast.makeText(this, "기능 구현 예정입니다", Toast.LENGTH_SHORT).show()
 
         }
 
         show4.setOnClickListener {
+            Toast.makeText(this, "기능 구현 예정입니다", Toast.LENGTH_SHORT).show()
 
         }
 
         show3.setOnClickListener {
+            Toast.makeText(this, "기능 구현 예정입니다", Toast.LENGTH_SHORT).show()
 
         }
 
         show2.setOnClickListener {
+            Toast.makeText(this, "기능 구현 예정입니다", Toast.LENGTH_SHORT).show()
 
         }
 
         show1.setOnClickListener {
+            Toast.makeText(this, "기능 구현 예정입니다", Toast.LENGTH_SHORT).show()
 
         }
 
         show0.setOnClickListener {
+            Toast.makeText(this, "기능 구현 예정입니다", Toast.LENGTH_SHORT).show()
 
         }
 
         showAdd.setOnClickListener {
+            Toast.makeText(this, "기능 구현 예정입니다", Toast.LENGTH_SHORT).show()
 
         }
 
