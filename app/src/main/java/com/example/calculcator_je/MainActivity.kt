@@ -11,6 +11,7 @@ import android.widget.TextView
 import android.widget.Toast
 import com.example.calculcator_je.databinding.ActivityMainBinding
 import org.w3c.dom.Text
+import kotlin.math.exp
 
 class MainActivity : AppCompatActivity() {
 
@@ -69,11 +70,12 @@ class MainActivity : AppCompatActivity() {
 
 
     var numList = arrayListOf<String>("", "", "")
-
     var str: String = ""
-
     var result: Double = 0.0
     var isError: Boolean = false
+    var memory: Double = 0.0
+    var clickedMemory: Boolean = false
+    var onlyRead: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -133,6 +135,9 @@ class MainActivity : AppCompatActivity() {
         opDiv = binding.operatorDiv
 
         error = binding.tvError
+
+        mc.isEnabled = false
+        mr.isEnabled = false // 일단 비활성화
 
 
         doubleZero.setOnClickListener {
@@ -260,6 +265,7 @@ class MainActivity : AppCompatActivity() {
             expressionText("0")
             hideOperator()
             numList = arrayListOf("", "", "")
+            memory = 0.0
             Log.d("확인", numList.toString())
         }
 
@@ -268,18 +274,75 @@ class MainActivity : AppCompatActivity() {
         }
 
         mc.setOnClickListener {
-
+            memory = 0.0
+            binding.btnMs.isEnabled = false
+            mc.isEnabled = false
+            opM.visibility = View.INVISIBLE
         }
 
         mr.setOnClickListener {
+            str = memory.toString()
+            val strDouble = str.toDouble()
+            if(strDouble - strDouble.toLong() == 0.0){ // 정수
+                expressionText(str.substring(0, str.length - 2))
+            } else { // 소수
+                expressionText(str)
+            }
+            clickedMemory = false
+            onlyRead = true
 
+            if(!numList[0].isEmpty() && !numList[1].isEmpty() && numList[2].isEmpty()){ // 1 +
+                changeNumList(2, str)
+                calcuate("=")
+                Log.d("확인_mr", numList.toString())
+            } else if(!numList[0].isEmpty() && numList[1].isEmpty()){ // 1
+                changeNumList(0, str)
+                Log.d("확인_mr", numList.toString())
+            }
+            Log.d("확인_ms", numList.toString())
+            Log.d("확인_ms", "메모리 : $memory")
         }
 
         mMinus.setOnClickListener {
+            opGroup.visibility = View.VISIBLE
+            opM.visibility = View.VISIBLE
+            if(!numList[2].isEmpty()){
+                calcuate("=")
+            }
+            memory -= expression.text.toString().toDouble()
+
+            mc.isEnabled = true
+            mr.isEnabled = true
+
+            clickedMemory = true
+
+            Log.d("확인_ms", numList.toString())
+            Log.d("확인_ms", "메모리 : $memory")
 
         }
 
         mPlus.setOnClickListener {
+            opGroup.visibility = View.VISIBLE
+            opM.visibility = View.VISIBLE
+            if(!numList[2].isEmpty()){
+                calcuate("=")
+            }
+            memory += expression.text.toString().toDouble()
+            mc.isEnabled = true
+            mr.isEnabled = true
+
+            clickedMemory = true
+
+            Log.d("확인_ms", numList.toString())
+            Log.d("확인_ms", "메모리 : $memory")
+        }
+
+        binding.btnMs.setOnClickListener {
+            memory = expression.text.toString().toDouble()
+            mc.isEnabled = true
+            mr.isEnabled = true
+            Log.d("확인_ms", numList.toString())
+            Log.d("확인_ms", "메모리 : $memory")
 
         }
 
@@ -342,9 +405,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun clickedNum(num: String) {
-        if (isError == true) { // 에러 o
+        if (isError == true ) { // 에러 o
             return
         } else { // 에러 x
+            if (clickedMemory == true || onlyRead == true){
+                str = ""
+                expressionText(str)
+                clickedMemory = false
+                Log.d("확인", numList.toString())
+                onlyRead = false
+
+            }
             if (numList[0].isEmpty()) { // 0
                 if (num == "." && !numList[0].contains(".")) { // 처음부터  . -> 0.1
                     str = expression.text.toString() + num
@@ -403,7 +474,9 @@ class MainActivity : AppCompatActivity() {
     private fun clickedOperator(operator: String) {
 
         if (numList[0].isEmpty()) { // 입력된 숫자가 없음
-            return
+            changeNumList(0, "0")
+            changeNumList(1, operator)
+
         } else if (!numList[0].isEmpty() && numList[1].isEmpty()) {
             changeNumList(1, operator)
         } else if (!numList[0].isEmpty() && !numList[1].isEmpty() && numList[2].isEmpty()) { // 1 +
@@ -481,6 +554,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
     private fun calcuate(operator: String) {
         var calOp = numList[1] // 1 + 2 <- "+"
         when (calOp) {
@@ -549,6 +623,7 @@ class MainActivity : AppCompatActivity() {
         expressionText(numList[i])
         Log.d("확인", numList.toString())
     }
+
 
     private fun hideOperator() {
         opGroup.visibility = View.GONE
