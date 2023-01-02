@@ -12,8 +12,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5992cffd-6780-45c3-a3e4-7d6ceac0817a" name="Changes" comment="미구현 토스트 처리">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="5992cffd-6780-45c3-a3e4-7d6ceac0817a" name="Changes" comment="루트 구현">
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/calculcator_je/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/calculcator_je/MainActivity.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -170,7 +169,14 @@
       <option name="project" value="LOCAL" />
       <updated>1672647787069</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="루트 구현">
+      <created>1672649020902</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1672649020902</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -192,6 +198,7 @@
     <MESSAGE value="chore" />
     <MESSAGE value="미구현 주석처리" />
     <MESSAGE value="미구현 토스트 처리" />
-    <option name="LAST_COMMIT_MESSAGE" value="미구현 토스트 처리" />
+    <MESSAGE value="루트 구현" />
+    <option name="LAST_COMMIT_MESSAGE" value="루트 구현" />
   </component>
 </project>

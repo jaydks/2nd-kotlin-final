@@ -244,6 +244,7 @@ class MainActivity : AppCompatActivity() {
                 return@setOnClickListener
             } else {
                 calcuate("=")
+                saveEquals()
             }
         }
 
@@ -681,6 +682,12 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "음수의 제곱근은 존재하지 않습니다.", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    private fun saveEquals(){
+//        opGroup.visibility = View.VISIBLE
+//        opGT.visibility = View.VISIBLE
+//        Log.d("확인_gt", saveEquals)
     }
 
     private fun hideOperator() {
